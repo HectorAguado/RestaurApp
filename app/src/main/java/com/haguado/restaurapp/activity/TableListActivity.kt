@@ -1,11 +1,11 @@
 package com.haguado.restaurapp.activity
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ArrayAdapter
+import android.support.v7.app.AppCompatActivity
+import android.widget.AdapterView
+import android.widget.Toast
 import com.haguado.restaurapp.R
 import com.haguado.restaurapp.adapter.TableListAdapter
-import com.haguado.restaurapp.model.Table
 import com.haguado.restaurapp.repository.TablesRepo
 import kotlinx.android.synthetic.main.activity_table_list.*
 
@@ -16,15 +16,14 @@ class TableListActivity : AppCompatActivity() {
         setContentView(R.layout.activity_table_list)
 
         table_list.adapter = TableListAdapter(this)
+        table_list.onItemClickListener = AdapterView.OnItemClickListener{
+            adapterView, view, index, id ->
+            Toast.makeText(this, "pulsaste la mesa ${TablesRepo.getTable(index).number}", Toast.LENGTH_SHORT).show()
+        }
 
-
-//        city_list.setOnItemClickListener {
-//            _, _, index, _ ->  // adapterView, view, index, l ->  // los atributos que no interesan los sustituimos por _
-//            // Avisamos al listener que una ciudad ha sido seleccionada
-//            onCitySelectedListener?.onCitySelected(Cities[index], index)
-//        }
 
     }
+
 
 
 }
