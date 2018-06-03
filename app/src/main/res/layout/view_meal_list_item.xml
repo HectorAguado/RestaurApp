@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="1dp">
 
 
     <android.support.constraint.Guideline
@@ -26,10 +27,13 @@
 
     <TextView
         android:id="@+id/number_name_label"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Nº6: Tartaleta" />
@@ -38,6 +42,7 @@
         android:id="@+id/price_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimary"
         android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="@+id/number_name_label"
         app:layout_constraintTop_toBottomOf="@+id/number_name_label"
@@ -47,53 +52,53 @@
         android:id="@+id/icon_egg"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginBottom="2dp"
         android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/number_name_label"
-        app:layout_constraintTop_toBottomOf="@+id/price_label"
         app:srcCompat="@drawable/egg" />
 
     <ImageView
         android:id="@+id/icon_lactose"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:layout_marginBottom="2dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
         android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/icon_egg"
-        app:layout_constraintTop_toBottomOf="@+id/price_label"
         app:srcCompat="@drawable/lactose" />
 
     <ImageView
         android:id="@+id/icon_gluten"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:layout_marginBottom="2dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
         android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/icon_lactose"
-        app:layout_constraintTop_toBottomOf="@+id/price_label"
         app:srcCompat="@drawable/gluten" />
 
     <ImageView
         android:id="@+id/icon_soy"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:layout_marginBottom="2dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
         android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/icon_gluten"
-        app:layout_constraintTop_toBottomOf="@+id/price_label"
         app:srcCompat="@drawable/soyb" />
 
     <ImageView
         android:id="@+id/icon_shrimp"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:layout_marginBottom="2dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
         android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/icon_soy"
-        app:layout_constraintTop_toBottomOf="@+id/price_label"
         app:srcCompat="@drawable/shrimp" />
 </android.support.constraint.ConstraintLayout>

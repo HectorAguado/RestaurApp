@@ -7,9 +7,21 @@
     tools:context=".activity.TableDetailActivity"
     android:orientation="vertical">
     <!--<include layout="@layout/view_table_list_item"/>-->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include layout="@layout/view_table_list_item"/>
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|right"
+            android:layout_marginRight="16dp"/>
+    </FrameLayout>
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/meal_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+
 </LinearLayout>

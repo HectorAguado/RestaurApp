@@ -12,28 +12,29 @@ import com.haguado.restaurapp.model.Meal
 
 class MealListAdapter(private val meals: MutableList<Meal>): RecyclerView.Adapter<MealListAdapter.MealViewHolder>() {
 
-    private val items = meals
+    var onClickListener: View.OnClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MealViewHolder{
         val view = LayoutInflater
                 .from(parent.context)
                 .inflate(R.layout.view_meal_list_item, parent, false)
+        view.setOnClickListener(onClickListener)
         return MealViewHolder(view)
     }
 
     override fun getItemCount(): Int {
-        return items.size
+        return meals.size
     }
 
     override fun onBindViewHolder(holder:MealViewHolder, position: Int) {
-        holder.bindMealItem(items[position])
+        holder.bindMealItem(meals[position])
     }
 
-    fun setTableMeals(meals: MutableList<Meal>){
-        meals.clear()
-        items.addAll(meals)
-        notifyDataSetChanged()
-    }
+//    fun setTableMeals(meals: MutableList<Meal>){
+//        meals.clear()
+//        meals.addAll(meals)
+//        notifyDataSetChanged()
+//    }
 
     inner class MealViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val mealImage = itemView.findViewById<ImageView>(R.id.meal_imageview)
@@ -52,7 +53,7 @@ class MealListAdapter(private val meals: MutableList<Meal>): RecyclerView.Adapte
             price?.text = context.getString(R.string.currency_format,meal.price)
             setAlergenIcons(meal.alergens)
         }
-        fun setAlergenIcons(alergens: List<Alergen>){
+        private fun setAlergenIcons(alergens: List<Alergen>){
 
             if (Alergen.EGG in alergens){
                 iconEgg?.visibility = View.VISIBLE

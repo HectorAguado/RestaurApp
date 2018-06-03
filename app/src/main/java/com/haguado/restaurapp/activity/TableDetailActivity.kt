@@ -3,11 +3,17 @@ package com.haguado.restaurapp.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.ActivityOptionsCompat
+import android.support.v4.app.FragmentManager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.View
+import android.widget.AdapterView
+import android.widget.Toast
 import com.haguado.restaurapp.R
 import com.haguado.restaurapp.adapter.MealListAdapter
+import com.haguado.restaurapp.dialog.MealDialog
 import com.haguado.restaurapp.model.Table
 import kotlinx.android.synthetic.main.activity_table_detail.*
 
@@ -30,18 +36,19 @@ class TableDetailActivity : AppCompatActivity(){
 
         val table = intent.getSerializableExtra(EXTRA_TABLE) as Table
 
-
         val adapter = MealListAdapter(table.meals)
-//        adapter.setTableMeals(table.meals)
+        adapter.onClickListener = View.OnClickListener {
+            val mealIndex = meal_list.getChildAdapterPosition(it)
+            val meal = table.meals[mealIndex]
+            val dialog = MealDialog.newInstance(meal)
+            dialog.show(this.supportFragmentManager, "meal_dialog")
+        }
         meal_list.adapter = adapter
         meal_list.layoutManager = LinearLayoutManager(this)
 
 
+
     }
 
-    // INTERFACE IMPLEMENTATION
-//    override fun onTableSelected(table: Table, position: Int) {
-//        val intent =
-//    }
 
 }

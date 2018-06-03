@@ -24,16 +24,11 @@ class TableListActivity : AppCompatActivity() {
             val table = TablesRepo.getTable(index)
             val tableDetailActivity = TableDetailActivity.intent(this, table)
             startActivity(tableDetailActivity)
-//            Toast.makeText(this, "pulsaste la mesa ${TablesRepo.getTable(index).number}", Toast.LENGTH_SHORT).show()
         }
 
 
     }
 
-     // INTERFACE
-//    interface OnTableSelectedListener{
-//         fun onTableSelected(table: Table, position: Int)
-//     }
 
 }
 
