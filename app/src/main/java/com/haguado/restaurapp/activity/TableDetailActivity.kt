@@ -3,14 +3,9 @@ package com.haguado.restaurapp.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.ActivityOptionsCompat
-import android.support.v4.app.FragmentManager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.View
-import android.widget.AdapterView
-import android.widget.Toast
 import com.haguado.restaurapp.R
 import com.haguado.restaurapp.adapter.MealListAdapter
 import com.haguado.restaurapp.dialog.MealDialog
@@ -46,7 +41,10 @@ class TableDetailActivity : AppCompatActivity(){
         meal_list.adapter = adapter
         meal_list.layoutManager = LinearLayoutManager(this)
 
-
+        add_meal_button.setOnClickListener {
+            val addMealListAdapter = AddMealActivity.intent(this)
+            startActivity(addMealListAdapter)
+        }
 
     }
 
