@@ -1,6 +1,8 @@
 package com.haguado.restaurapp.model
 
-data class Table (var number: Int, var meals: List<Meal>){
+import java.io.Serializable
+
+data class Table (var number: Int, var meals: MutableList<Meal>): Serializable{
     override fun toString() = "Mesa ${number}"
 //    override fun toString(): String {
 //        var string = ""

@@ -4,14 +4,12 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import com.haguado.restaurapp.R
-import com.haguado.restaurapp.model.Table
 import com.haguado.restaurapp.repository.TablesRepo
-import kotlinx.android.synthetic.main.view_table_list_item.*
+import com.haguado.restaurapp.model.Table
 
 class TableListAdapter(context: Context): BaseAdapter() {
 
