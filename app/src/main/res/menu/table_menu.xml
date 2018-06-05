@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/menu_calculate"
-        android:title="Pagar Vuenta" />
+        android:title="Pagar Cuenta" />
     <item
         android:id="@+id/menu_delete"
         android:title="Borrar platos" />

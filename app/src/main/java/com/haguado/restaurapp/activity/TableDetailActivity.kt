@@ -1,10 +1,13 @@
 package com.haguado.restaurapp.activity
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import com.haguado.restaurapp.R
@@ -43,7 +46,7 @@ class TableDetailActivity : AppCompatActivity(){
 
         table?.let {
             title = String.format(getString(R.string.table_format), tableNumber)
-            loadTable(table)
+            loadTable()
 
             // Add Button
             add_meal_button.setOnClickListener {
@@ -55,10 +58,10 @@ class TableDetailActivity : AppCompatActivity(){
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        loadTable(table)
+        loadTable()
     }
 
-    private fun loadTable(table: Table){
+    private fun loadTable(){
         // Adaptador
         val adapter = MealListAdapter(table.meals)
         // Al pulsar un elemento, mostramos en un AlertDialog el detalle del plato
@@ -70,10 +73,10 @@ class TableDetailActivity : AppCompatActivity(){
         }
         meal_list.adapter = adapter
         meal_list.layoutManager = LinearLayoutManager(this)
-        setupHeader(table)
+        setupHeader()
     }
 
-    private fun setupHeader(table: Table){
+    private fun setupHeader(){
 
         total_meal_label.text = table.meals.size.toString()
         val totalCost = table.tableTotalCost()
@@ -86,12 +89,35 @@ class TableDetailActivity : AppCompatActivity(){
         }
     }
 
-
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        super.onCreateOptionsMenu(menu)
+        menuInflater.inflate(R.menu.table_menu, menu)
+        return true
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             android.R.id.home -> {
                 this.onBackPressed()
+                return true
+            }
+            R.id.menu_calculate -> {
+
+                val total = table.tableTotalCost()
+                val dialog = AlertDialog.Builder(this)
+                    .setTitle("Total:")
+                    .setMessage(String.format(getString(R.string.currency_format), total))
+                        .setIcon(R.drawable.ic_payment)
+                    .setPositiveButton("Ok"){_, _ -> /** Do nothing */ }.create()
+                dialog.show()
+                return true
+            }
+            R.id.menu_delete -> {
+                table.clearTable()
+
+                loadTable()
+                val contentLayout = findViewById<View>(android.R.id.content)
+                Snackbar.make(contentLayout, "Se han borrado todos los platos", Snackbar.LENGTH_LONG).show()
                 return true
             }
         }
