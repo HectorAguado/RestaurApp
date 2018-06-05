@@ -13,6 +13,7 @@ import com.haguado.restaurapp.model.Table
 
 class TableListAdapter(context: Context): BaseAdapter() {
 
+    private var innerContext = context
     // PROPERTIES
     private val mInflater: LayoutInflater = LayoutInflater.from(context)
 
@@ -41,13 +42,14 @@ class TableListAdapter(context: Context): BaseAdapter() {
             view = convertView
             vh = view.tag as ListRowHolder
         }
-        vh.numberLabel?.text = "Mesa ${table.number}"
+
+        vh.numberLabel?.text = String.format(innerContext.getString(R.string.table_format), table.number)
         if (table.meals.isEmpty()) {
             vh.tableImage?.setImageResource(R.drawable.table_off)
             vh.isEmptyLabel?.text = "está libre"
         }else{
             vh.tableImage?.setImageResource(R.drawable.table_on)
-            vh.isEmptyLabel?.text = "está ocupada"
+            vh.isEmptyLabel?.text = "contiene ${table.meals.size} comandas"
         }
         return view
     }

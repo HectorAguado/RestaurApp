@@ -30,11 +30,11 @@ class MealListAdapter(private val meals: MutableList<Meal>): RecyclerView.Adapte
         holder.bindMealItem(meals[position])
     }
 
-//    fun setTableMeals(meals: MutableList<Meal>){
-//        meals.clear()
-//        meals.addAll(meals)
-//        notifyDataSetChanged()
-//    }
+    fun setTableMeals(meals: MutableList<Meal>){
+        meals.clear()
+        meals.addAll(meals)
+        notifyDataSetChanged()
+    }
 
     inner class MealViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val mealImage = itemView.findViewById<ImageView>(R.id.meal_imageview)
