@@ -9,7 +9,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.haguado.restaurapp.R
 import com.haguado.restaurapp.repository.TablesRepo
-import com.haguado.restaurapp.model.Table
 
 class TableListAdapter(context: Context): BaseAdapter() {
 
@@ -56,7 +55,7 @@ class TableListAdapter(context: Context): BaseAdapter() {
 
     private class ListRowHolder(row: View?) {
         val tableImage = row?.findViewById<ImageView>(R.id.table_imageview)
-        val numberLabel = row?.findViewById<TextView>(R.id.table_number_textview)
+        val numberLabel = row?.findViewById<TextView>(R.id.textview1)
         val isEmptyLabel = row?.findViewById<TextView>(R.id.table_is_empty_textView)
     }
 

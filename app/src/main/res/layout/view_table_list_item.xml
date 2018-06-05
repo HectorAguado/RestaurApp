@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/table_number_textview"
+        android:id="@+id/textview1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -38,8 +38,8 @@
         android:layout_marginStart="8dp"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/table_number_textview"
-        app:layout_constraintTop_toTopOf="@+id/table_number_textview"
+        app:layout_constraintStart_toEndOf="@+id/textview1"
+        app:layout_constraintTop_toTopOf="@+id/textview1"
         tools:text="está vacía" />
 
 </android.support.constraint.ConstraintLayout>

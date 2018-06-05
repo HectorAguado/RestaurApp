@@ -10,7 +10,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <include layout="@layout/view_table_list_item"/>
+        <include layout="@layout/view_table_header"/>
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/add_meal_button"
             android:layout_width="wrap_content"

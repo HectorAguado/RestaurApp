@@ -13,6 +13,7 @@ import com.haguado.restaurapp.dialog.MealDialog
 import com.haguado.restaurapp.model.Table
 import com.haguado.restaurapp.repository.TablesRepo
 import kotlinx.android.synthetic.main.activity_table_detail.*
+import kotlinx.android.synthetic.main.view_table_header.*
 
 
 class TableDetailActivity : AppCompatActivity(){
@@ -36,7 +37,6 @@ class TableDetailActivity : AppCompatActivity(){
 
         // Back Button
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-
 
         val tableNumber = intent.getIntExtra(EXTRA_TABLE_NUMBER, 1)
         table = TablesRepo.getTableByNumber(tableNumber)!!
@@ -65,12 +65,28 @@ class TableDetailActivity : AppCompatActivity(){
         adapter.onClickListener = View.OnClickListener {
             val mealIndex = meal_list.getChildAdapterPosition(it)
             val meal = table.meals[mealIndex]
-            val dialog = MealDialog.newInstance(meal.number, EXTRA_SENDER)
+            val dialog = MealDialog.newInstance(meal.number, EXTRA_SENDER, table.number)
             dialog.show(this.supportFragmentManager, "meal_dialog")
         }
         meal_list.adapter = adapter
         meal_list.layoutManager = LinearLayoutManager(this)
+        setupHeader(table)
     }
+
+    private fun setupHeader(table: Table){
+
+        total_meal_label.text = table.meals.size.toString()
+        val totalCost = table.tableTotalCost()
+        total_cost_label.text = resources.getString(R.string.currency_format, totalCost)
+        if (table.meals.isEmpty()) {
+            table_imageview.setImageResource(R.drawable.table_off)
+
+        }else{
+            table_imageview.setImageResource(R.drawable.table_on)
+        }
+    }
+
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){

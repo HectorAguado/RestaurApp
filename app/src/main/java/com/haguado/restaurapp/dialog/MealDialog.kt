@@ -22,23 +22,25 @@ import kotlinx.android.synthetic.main.dialog_meal.view.*
 
 
 class MealDialog(): DialogFragment(){
+
     companion object {
         val EXTRA_MEAL_NUMBER = "EXTRA_MEAL_NUMBER"
         val EXTRA_TABLE_NUMBER = "EXTRA_TABLE_NUMBER"
         val EXTRA_SENDER_CODE = "EXTRA_SENDER_CODE"
-        fun newInstance(mealNumber: Int, senderCode: Int): MealDialog{
+
+//        fun newInstance(mealNumber: Int, senderCode: Int): MealDialog{
+//            val arguments = Bundle()
+//            arguments.putInt(EXTRA_SENDER_CODE, senderCode)
+//            arguments.putInt(EXTRA_MEAL_NUMBER, mealNumber)
+//            val dialog = MealDialog()
+//            dialog.arguments = arguments
+//            return dialog
+//        }
+        fun newInstance(mealNumber: Int, senderCode: Int, tableNumber: Int): MealDialog{
             val arguments = Bundle()
             arguments.putInt(EXTRA_SENDER_CODE, senderCode)
             arguments.putInt(EXTRA_MEAL_NUMBER, mealNumber)
-            val dialog = MealDialog()
-            dialog.arguments = arguments
-            return dialog
-        }
-        fun newInstance(mealNumber: Int, senderCode: Int, tablenumber: Int): MealDialog{
-            val arguments = Bundle()
-            arguments.putInt(EXTRA_SENDER_CODE, senderCode)
-            arguments.putInt(EXTRA_MEAL_NUMBER, mealNumber)
-            arguments.putInt(EXTRA_TABLE_NUMBER, tablenumber)
+            arguments.putInt(EXTRA_TABLE_NUMBER, tableNumber)
             val dialog = MealDialog()
             dialog.arguments = arguments
             return dialog
@@ -60,16 +62,18 @@ class MealDialog(): DialogFragment(){
             }
 
             val senderCode = arguments?.getInt(EXTRA_SENDER_CODE,1)
-
-            if (senderCode == 1 ) {
-                return AlertDialog.Builder(context)
+            val tableNumber = arguments?.getInt(EXTRA_TABLE_NUMBER, 0)
+            tableNumber?.let {
+                when (senderCode) {
+                1 -> return AlertDialog.Builder(context)
                         .setView(dialogView)
-                        .setPositiveButton("Volver", { _, _ -> dismiss() })
+                        .setNegativeButton("Volver", { _, _ -> dismiss() })
+                        .setPositiveButton("Eliminar", {_, _ ->
+                            val table = TablesRepo.getTableByNumber(tableNumber)
+                            table?.removeMeal(meal)
+                        })
                         .create()
-            }else{
-                val tableNumber = arguments?.getInt(EXTRA_TABLE_NUMBER, 0)
-                tableNumber?.let {
-                    return AlertDialog.Builder(context)
+                2 -> return AlertDialog.Builder(context)
                             .setView(dialogView)
                             .setTitle("Añadiendo ${meal.name} a Mesa ${tableNumber}")
                             .setPositiveButton("Añadir", { _, _ ->
@@ -78,6 +82,7 @@ class MealDialog(): DialogFragment(){
                             })
                             .setNegativeButton(android.R.string.cancel, { _, _ ->  cancelAddMeal()})
                             .create()
+                else -> return super.onCreateDialog(savedInstanceState)
                 }
             }
         }
