@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -24,6 +26,9 @@ class TableDetailActivity : AppCompatActivity(){
     private val REQUEST_ADD_MEAL = 1
     private val EXTRA_SENDER = 1
     private lateinit var table: Table
+
+    private lateinit var adapter: MealListAdapter
+
     companion object {
         val EXTRA_TABLE_NUMBER = "EXTRA_TABLE_NUMBER"
 
@@ -54,16 +59,20 @@ class TableDetailActivity : AppCompatActivity(){
                 startActivityForResult(addMealActivity, REQUEST_ADD_MEAL)
             }
          }
+
+//        setRecyclerViewScrollListener()
+        setRecyclerViewItemTouchListener()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        loadTable()
+//        loadTable()
+        adapter.notifyDataSetChanged()
     }
 
     private fun loadTable(){
         // Adaptador
-        val adapter = MealListAdapter(table.meals)
+        adapter = MealListAdapter(table.meals)
         // Al pulsar un elemento, mostramos en un AlertDialog el detalle del plato
         adapter.onClickListener = View.OnClickListener {
             val mealIndex = meal_list.getChildAdapterPosition(it)
@@ -108,20 +117,67 @@ class TableDetailActivity : AppCompatActivity(){
                     .setTitle("Total:")
                     .setMessage(String.format(getString(R.string.currency_format), total))
                         .setIcon(R.drawable.ic_payment)
-                    .setPositiveButton("Ok"){_, _ -> /** Do nothing */ }.create()
+                    .setPositiveButton("Ok"){_, _ ->
+                        var mealIndex = table.meals.size
+                        while (mealIndex != 0){
+                            mealIndex -= 1
+                            var meal = table.meals[mealIndex]
+                            table.removeMeal(meal)
+                            adapter.notifyItemChanged(mealIndex)
+                        }
+
+                        if (table.meals.size != 0){
+                            var meal0 = table.meals[0]
+                            table.removeMeal(meal0)
+                            adapter.notifyItemRemoved(0)
+                        }
+                    }.create()
                 dialog.show()
+                val contentLayout = findViewById<View>(android.R.id.content)
+                Snackbar.make(contentLayout, "Se han borrado todos los platos", Snackbar.LENGTH_LONG).show()
                 return true
             }
             R.id.menu_delete -> {
                 table.clearTable()
 
-                loadTable()
+                adapter.notifyDataSetChanged()
                 val contentLayout = findViewById<View>(android.R.id.content)
                 Snackbar.make(contentLayout, "Se han borrado todos los platos", Snackbar.LENGTH_LONG).show()
                 return true
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun setRecyclerViewScrollListener() {
+        meal_list.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+
+            }
+        })
+    }
+    private fun setRecyclerViewItemTouchListener() {
+
+        //1
+        val itemTouchCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, viewHolder1: RecyclerView.ViewHolder): Boolean {
+                //2
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, swipeDir: Int) {
+                //3
+                val position = viewHolder.adapterPosition
+                val meal = table.meals[position]
+                table.removeMeal(meal)
+                adapter.notifyItemRemoved(position)
+            }
+        }
+
+        //4
+        val itemTouchHelper = ItemTouchHelper(itemTouchCallback)
+        itemTouchHelper.attachToRecyclerView(meal_list)
     }
 
 }

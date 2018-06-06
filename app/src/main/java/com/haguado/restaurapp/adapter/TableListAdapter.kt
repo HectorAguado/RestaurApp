@@ -42,7 +42,7 @@ class TableListAdapter(context: Context): BaseAdapter() {
             vh = view.tag as ListRowHolder
         }
 
-        vh.numberLabel?.text = String.format(innerContext.getString(R.string.table_format), table.number)
+        vh.numberLabel?.text = String.format( view?.context!!.getString(R.string.table_format), table.number)
         if (table.meals.isEmpty()) {
             vh.tableImage?.setImageResource(R.drawable.table_off)
             vh.isEmptyLabel?.text = "está libre"
